@@ -3,9 +3,6 @@ import { readFileSync } from "fs";
 const state = readFileSync("in").toString().trim().split(",").map(Number);
 
 function solve(initialDelay, days, initialPopulation = 1) {
-  if (initialDelay === 5 && days === 15) {
-    console.log();
-  }
   let population = initialPopulation;
   const breedInterval = 7;
   const breedDelay = 2;
