@@ -1,3 +1,3 @@
-import { readFileSync } from "fs";
+import "fs";
 
-readFileSync("s1").toString().trim();
+fs.readFileSync("s1").toString().trim();
