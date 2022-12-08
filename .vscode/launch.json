@@ -6,6 +6,7 @@
 	"configurations": [
 		{
 			"type": "node",
+      "runtimeVersion": "16",
 			"request": "launch",
       "console": "integratedTerminal",
 			"name": "Current File",
