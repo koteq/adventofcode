@@ -1,3 +1,5 @@
 import fs from "fs";
 
-fs.readFileSync("s1").toString().trim().split("\n");
+const input_file = "s1";
+
+fs.readFileSync(input_file).toString().trim().split("\n");
