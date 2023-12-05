@@ -1,5 +1,7 @@
-import fs from "fs";
+import fs from "node:fs";
 
-const input_file = "s1";
+function main(input_file = "s1") {
+  fs.readFileSync(input_file).toString().trim().split("\n");
+}
 
-fs.readFileSync(input_file).toString().trim().split("\n");
+main();
