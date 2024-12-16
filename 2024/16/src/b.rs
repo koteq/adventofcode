@@ -133,7 +133,11 @@ fn lowest_score_path(start: Point, end: Point, maze: &HashSet<Point>) -> usize {
       next_states.push(State {
         score: score + 1,
         position: forward,
-        direction,
+        direction: if forward == end {
+          Direction::East
+        } else {
+          direction
+        },
       });
     }
 
