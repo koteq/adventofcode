@@ -29,15 +29,15 @@ impl TryFrom<u8> for Op {
   }
 }
 
-struct Computer {
-  a: i32,
-  b: i32,
-  c: i32,
+pub struct Computer {
+  pub a: u64,
+  b: u64,
+  c: u64,
   program_pointer: usize,
 }
 
 impl Computer {
-  fn new(a: i32, b: i32, c: i32) -> Self {
+  fn new(a: u64, b: u64, c: u64) -> Self {
     Self {
       a,
       b,
@@ -46,14 +46,14 @@ impl Computer {
     }
   }
 
-  fn run(&mut self, program: &[u8]) -> Vec<u8> {
+  pub fn run(&mut self, program: &[u8]) -> Vec<u8> {
     let mut output: Vec<u8> = Vec::new();
     while self.program_pointer < program.len() {
       let operation: Op = program[self.program_pointer].try_into().unwrap();
       let operand = program[self.program_pointer + 1];
       match operation {
-        Op::ADV => self.a /= 2_i32.pow(u32::try_from(self.combo(operand)).unwrap()),
-        Op::BXL => self.b ^= i32::from(operand),
+        Op::ADV => self.a /= 2_u64.pow(u32::try_from(self.combo(operand)).unwrap()),
+        Op::BXL => self.b ^= u64::from(operand),
         Op::BST => self.b = self.combo(operand) % 8,
         Op::JNZ => {
           if self.a != 0 {
@@ -63,15 +63,15 @@ impl Computer {
         }
         Op::BXC => self.b ^= self.c,
         Op::OUT => output.push(u8::try_from(self.combo(operand) % 8).unwrap()),
-        Op::BDV => self.b = self.a / 2_i32.pow(u32::try_from(self.combo(operand)).unwrap()),
-        Op::CDV => self.c = self.a / 2_i32.pow(u32::try_from(self.combo(operand)).unwrap()),
+        Op::BDV => self.b = self.a / 2_u64.pow(u32::try_from(self.combo(operand)).unwrap()),
+        Op::CDV => self.c = self.a / 2_u64.pow(u32::try_from(self.combo(operand)).unwrap()),
       }
       self.program_pointer += 2;
     }
     output
   }
 
-  fn combo(&self, value: u8) -> i32 {
+  fn combo(&self, value: u8) -> u64 {
     match value {
       0..=3 => value.into(),
       4 => self.a,
@@ -85,7 +85,7 @@ impl Computer {
 fn parse_registers(input: &str) -> Computer {
   let mut split = input
     .split(|c| !char::is_ascii_digit(&c))
-    .filter_map(|n| str::parse::<i32>(n).ok());
+    .filter_map(|n| str::parse::<u64>(n).ok());
   Computer::new(
     split.next().unwrap(),
     split.next().unwrap(),
@@ -101,7 +101,7 @@ fn parse_program(input: &str) -> Vec<u8> {
     .collect()
 }
 
-fn parse(input: &str) -> (Computer, Vec<u8>) {
+pub fn parse(input: &str) -> (Computer, Vec<u8>) {
   let mut split = input.split("\n\n");
   (
     parse_registers(split.next().unwrap()),
