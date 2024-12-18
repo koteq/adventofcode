@@ -1,0 +1,11 @@
+[package]
+name = "d18"
+version = "0.1.0"
+edition = "2021"
+
+[lints.clippy]
+nursery = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+
+[dependencies]
+itertools = "0.13.0"
